@@ -1,0 +1,1 @@
+Instead of manually putting which tools you use, this markdown component will be able to look at your repositories and do a breakdown of the percentage of tools/languages that you use in total and in the past year.
