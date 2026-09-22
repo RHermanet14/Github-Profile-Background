@@ -1,1 +1,9 @@
-# TBD
+# Dependencies
+node_modules/
+
+# Local config (copy from config.example.json)
+config.json
+
+# Composed output is generated; keep the folder
+output/*
+!output/.gitkeep

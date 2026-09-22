@@ -1,0 +1,42 @@
+{
+  "width": 900,
+  "height": 520,
+  "background": "presets/midnight.svg",
+  "slots": [
+    {
+      "type": "text",
+      "text": "Alex · builder",
+      "x": 48,
+      "y": 72,
+      "fontSize": 42,
+      "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
+      "fill": "#f4f7fb",
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "text": "Repos get rebuilt into one profile image whenever embeds change.",
+      "x": 48,
+      "y": 118,
+      "fontSize": 16,
+      "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
+      "fill": "#c5d0e0"
+    },
+    {
+      "type": "svg",
+      "src": "embeds/sample-chart.svg",
+      "x": 48,
+      "y": 160,
+      "width": 520,
+      "height": 280
+    },
+    {
+      "type": "svg",
+      "src": "embeds/sample-stats.svg",
+      "x": 592,
+      "y": 160,
+      "width": 260,
+      "height": 280
+    }
+  ]
+}

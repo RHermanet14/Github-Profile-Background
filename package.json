@@ -1,0 +1,10 @@
+{
+  "name": "github-tool-chart",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compose": "node scripts/compose.mjs",
+    "compose:example": "node scripts/compose.mjs --config config.example.json"
+  }
+}

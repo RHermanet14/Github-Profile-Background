@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="280" viewBox="0 0 520 280">
+  <rect width="520" height="280" rx="16" fill="#0d1520" fill-opacity="0.72" stroke="#3d5670" stroke-width="1"/>
+  <text x="28" y="42" fill="#e8eef6" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600">Languages (sample embed)</text>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#c5d0e0">
+    <text x="28" y="88">TypeScript</text>
+    <rect x="140" y="74" width="300" height="16" rx="4" fill="#1e2d3d"/>
+    <rect x="140" y="74" width="210" height="16" rx="4" fill="#3b82f6"/>
+    <text x="454" y="88">42%</text>
+
+    <text x="28" y="128">Python</text>
+    <rect x="140" y="114" width="300" height="16" rx="4" fill="#1e2d3d"/>
+    <rect x="140" y="114" width="150" height="16" rx="4" fill="#22c55e"/>
+    <text x="454" y="128">30%</text>
+
+    <text x="28" y="168">Go</text>
+    <rect x="140" y="154" width="300" height="16" rx="4" fill="#1e2d3d"/>
+    <rect x="140" y="154" width="80" height="16" rx="4" fill="#eab308"/>
+    <text x="454" y="168">16%</text>
+
+    <text x="28" y="208">Rust</text>
+    <rect x="140" y="194" width="300" height="16" rx="4" fill="#1e2d3d"/>
+    <rect x="140" y="194" width="60" height="16" rx="4" fill="#f97316"/>
+    <text x="454" y="208">12%</text>
+  </g>
+  <text x="28" y="250" fill="#8fa0b5" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12">Swap this file  compose rebuilds the profile image.</text>
+</svg>
