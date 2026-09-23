@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [{ "source": "/", "destination": "/api/profile" }],
+  "functions": {
+    "api/profile.js": {
+      "includeFiles": "{presets/**,embeds/**,config.json,config.example.json,lib/**}"
+    }
+  }
+}

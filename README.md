@@ -1,49 +1,167 @@
-# Github Tool Chart — profile image compositor
+# Profile image compositor (self-hosted)
 
-Builds **one** profile SVG from a background (preset, local file, or URL) plus slots for text and your updating SVG embeds.
+Build **one** live profile SVG from a background + slots (text, local files, or any remote SVG/image embed). Deploy **your own** copy to Vercel so updates happen on request — no recommitting the image — and rate limits stay on your account.
 
-## Quick start
-
-```bash
-npm run compose:example
+```text
+Profile README  --img-->  your-app.vercel.app/api/profile
+                                |
+                         config.json + presets
+                                |
+                         fetch remote / local embeds
+                                |
+                         composed image/svg+xml
 ```
 
-Writes `output/profile.svg`. Open that file in a browser to preview.
+---
 
-Copy the example config and edit it:
+## Deploy (recommended)
+
+### 1. Fork or clone this repo
+
+### 2. Deploy to Vercel
+
+- [Deploy with Vercel](https://vercel.com/new) and import the repo, or:
+
+```bash
+npx vercel
+```
+
+### 3. Environment variables (optional)
+
+In the Vercel project → Settings → Environment Variables:
+
+| Variable | Required | Meaning |
+|----------|----------|---------|
+| `CACHE_MAX_AGE` | No | Seconds to cache the composed image (default `3600`) |
+
+### 4. Add your config
+
+```bash
+cp config.example.json config.json
+```
+
+Edit `config.json` (name, background, layout, embed URLs). Commit it on your fork so the deploy picks it up.
+
+To include a live stats card from another service, paste its image URL as an `svg` (or `image`) slot `src` — same as you’d put in a normal README `<img>`.
+
+### 5. Use it in your profile README
+
+In your `username/username` repo:
+
+```html
+<p align="center">
+  <img src="https://YOUR-DEPLOYMENT.vercel.app/api/profile" alt="Profile" />
+</p>
+```
+
+Root URL also works (rewrites to the API):
+
+```html
+<img src="https://YOUR-DEPLOYMENT.vercel.app/" alt="Profile" />
+```
+
+Optional query overrides:
+
+```text
+https://YOUR-DEPLOYMENT.vercel.app/api/profile?bg=aurora&title=Ryan
+```
+
+After deploy, open `/api/profile` in a browser — you should see the composed SVG. Remote embeds refresh when the cache expires, without a new git commit.
+
+---
+
+## Local preview (CLI)
 
 ```bash
 cp config.example.json config.json
 npm run compose
 ```
 
+Open `output/profile.svg` in a browser.
+
+```bash
+npm run compose:example          # uses config.example.json
+npm run compose:aurora           # another preset demo
+node scripts/compose.mjs --help
+```
+
+For a local live server (same as production):
+
+```bash
+npx vercel dev
+# then open http://localhost:3000/api/profile
+```
+
+---
+
 ## Config
 
 | Field | Meaning |
 |--------|---------|
-| `background` | Preset name (`midnight`, `aurora`, `slate`), a local path, or an `https://` image URL (png/jpg/gif/webp/svg) |
+| `background` | Preset (`midnight`, `aurora`, `slate`), local path, or `https://` image URL |
 | `width` / `height` | Canvas size |
-| `slots` | Layers drawn on top of the background |
+| `slots` | Layers on top of the background |
 
-Slot types:
+### Slot types
 
-- `text` — `{ type, text, x, y, fontSize, fill, fontFamily, fontWeight }`
-- `svg` — `{ type, src, x, y, width, height }` (your live embeds)
-- `image` — `{ type, src, x, y, width, height }` (raster)
+```json
+{ "type": "text", "text": "Hi", "x": 40, "y": 60, "fontSize": 36, "fill": "#fff", "fontWeight": "700" }
 
-## Profile README
+{ "type": "svg", "src": "embeds/chart.svg", "x": 40, "y": 120, "width": 500, "height": 280 }
 
-After composing, point your profile README at the image:
+{ "type": "svg", "src": "https://example.com/your-stats-card.svg?user=You", "x": 40, "y": 120, "width": 500, "height": 280 }
 
-```markdown
-![Profile](./output/profile.svg)
+{ "type": "image", "src": "photos/avatar.png", "x": 700, "y": 40, "width": 120, "height": 120 }
 ```
 
-Or host/commit the file in your `username/username` repo and use that path.
+- **svg** — local path or any `https://` URL that returns SVG (stats trackers, charts, badges, etc.)
+- **image** — local or remote png/jpg/gif/webp
+- Remote sources are fetched and inlined on each compose (subject to API cache headers)
 
-Re-run `npm run compose` whenever an embed SVG changes (or wire that into a GitHub Action later).
+### Backgrounds
 
-## Notes
+| You want | `"background"` value |
+|----------|----------------------|
+| Built-in | `"midnight"`, `"aurora"`, `"slate"` |
+| File in repo | `"presets/midnight.svg"` or `"photos/beach.png"` |
+| Remote photo | `"https://example.com/banner.jpg"` |
 
-- Animated GIF backgrounds are embedded as data URIs; animation often **does not** play when GitHub displays the SVG as an image. Prefer a static frame, PNG, or SVG preset if motion matters.
-- Nested SVGs stay vector; keep embeds as SVG when you can.
+---
+
+## Layout sketch (example config)
+
+```text
+←———————————— 900px ————————————→
+┌────────────────────────────────────────┐
+│  background (preset / photo / URL)     │
+│  Title + subtitle                      │
+│  ┌───────────────┐  ┌────────┐         │
+│  │ local / remote│  │ remote │         │
+│  │ svg embed     │  │ embed  │         │
+│  └───────────────┘  └────────┘         │
+└────────────────────────────────────────┘
+```
+
+---
+
+## Caching
+
+The API sends `Cache-Control: public, s-maxage=…, stale-while-revalidate=86400`.
+
+- Default max age: **1 hour** (`CACHE_MAX_AGE=3600`).
+- Lower it for fresher remote embeds (more upstream calls on your Vercel + those hosts).
+- GitHub/CDN may cache the image as well; hard-refresh or wait for TTL to see changes.
+
+---
+
+## Why self-host?
+
+A shared public URL would put everyone’s traffic on one quota. Each user deploying their own instance keeps limits and cost on their account.
+
+---
+
+## Limits
+
+- One flat image: links/hover inside nested SVGs usually do not behave like normal README markdown.
+- Animated GIF backgrounds often will not animate when GitHub displays the SVG.
+- Upstream embed hosts can still rate-limit; caching reduces how often you call them.

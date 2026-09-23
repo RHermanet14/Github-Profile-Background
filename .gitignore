@@ -1,9 +1,18 @@
 # Dependencies
 node_modules/
 
-# Local config (copy from config.example.json)
+# Local secrets / Vercel CLI (use .env.example as the template)
+.env
+.env.local
+.env.*.local
+.vercel/
 config.json
 
 # Composed output is generated; keep the folder
 output/*
 !output/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

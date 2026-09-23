@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "compose": "node scripts/compose.mjs",
-    "compose:example": "node scripts/compose.mjs --config config.example.json"
+    "compose:example": "node scripts/compose.mjs --config config.example.json",
+    "compose:aurora": "node scripts/compose.mjs --config examples/preset-aurora.json"
   }
 }
