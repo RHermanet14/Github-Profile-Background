@@ -6,7 +6,7 @@ node_modules/
 .env.local
 .env.*.local
 .vercel/
-config.json
+#config.json
 
 # Composed output is generated; keep the folder
 output/*
@@ -16,3 +16,6 @@ output/*
 .DS_Store
 Thumbs.db
 *.log
+
+.vercel
+.env*.local

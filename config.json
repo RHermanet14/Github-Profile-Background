@@ -1,0 +1,43 @@
+{
+  "width": 900,
+  "height": 560,
+  "background": "midnight",
+  "out": "output/profile.svg",
+  "slots": [
+    {
+      "type": "text",
+      "text": "Alex · builder",
+      "x": 48,
+      "y": 64,
+      "fontSize": 40,
+      "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
+      "fill": "#f4f7fb",
+      "fontWeight": "700"
+    },
+    {
+      "type": "text",
+      "text": "Live profile image — remote embeds refresh without recommitting.",
+      "x": 48,
+      "y": 104,
+      "fontSize": 15,
+      "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
+      "fill": "#c5d0e0"
+    },
+    {
+      "type": "svg",
+      "src": "embeds/sample-chart.svg",
+      "x": 48,
+      "y": 140,
+      "width": 480,
+      "height": 360
+    },
+    {
+      "type": "svg",
+      "src": "embeds/sample-stats.svg",
+      "x": 552,
+      "y": 140,
+      "width": 300,
+      "height": 360
+    }
+  ]
+}
