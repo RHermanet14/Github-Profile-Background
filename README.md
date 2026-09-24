@@ -46,37 +46,23 @@ To include a live stats card from another service, paste its image URL as an `sv
 
 ### 5. Use it in your profile README
 
-In your **`RHermanet14/RHermanet14`** profile repo (not this repo’s README), add an **image**, not a link.
+Put this in the **`RHermanet14/RHermanet14`** repository’s `README.md` (the special repo that powers your GitHub profile). Do **not** put it only in this `Github-Tool-Chart` repo.
 
-Wrong (shows a blue “Profile” link only):
-
-```markdown
-[Profile](https://github-tool-chart.vercel.app/api/profile)
-```
-
-Right — markdown image (`!` before the brackets):
-
-```markdown
-![Profile](https://github-tool-chart.vercel.app/api/profile)
-```
-
-Or HTML:
+Paste exactly (note `?v=2` — required so GitHub’s image proxy picks up the fixed SVG; without it Camo may keep an old broken copy and only show the alt text “Profile”):
 
 ```html
 <p align="center">
-  <img src="https://github-tool-chart.vercel.app/api/profile" width="900" alt="Profile" />
+  <img src="https://github-tool-chart.vercel.app/api/profile?v=2" width="900" alt="Profile banner" />
 </p>
 ```
 
-After saving, the GitHub preview should show the banner graphic. Clicking through to the URL in a browser is expected to open the raw SVG (that’s the image source).
+`alt` is optional. Leaving it out is fine.
 
-Optional query overrides:
+Then commit **that** README on the profile repo and check https://github.com/RHermanet14 — you should see the banner image.
 
-```text
-https://github-tool-chart.vercel.app/api/profile?bg=aurora&title=Ryan
-```
+If you still see only blue “Profile” text, GitHub Camo is still caching a failed SVG. Change `?v=2` to `?v=3` (any new query string forces a fresh fetch).
 
-Edit [`config.json`](config.json) for permanent title/embeds, commit + push (or `npx vercel --prod`) so the live image updates.
+Opening the image URL in a browser shows the raw SVG on purpose — that is the image file, not a webpage.
 
 ---
 

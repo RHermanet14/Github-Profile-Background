@@ -1,43 +1,172 @@
 {
   "width": 900,
-  "height": 560,
+  "height": 720,
   "background": "midnight",
   "out": "output/profile.svg",
   "slots": [
     {
       "type": "text",
-      "text": "Ryan",
+      "text": "Hello, I'm Ryan",
       "x": 48,
       "y": 64,
-      "fontSize": 40,
+      "fontSize": 36,
       "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
       "fill": "#f4f7fb",
       "fontWeight": "700"
     },
     {
+      "type": "image",
+      "src": "https://github.com/user-attachments/assets/e9d20a5c-9353-4548-8448-cb6f1709589b",
+      "x": 720,
+      "y": 24,
+      "width": 140,
+      "height": 100
+    },
+    {
       "type": "text",
-      "text": "Live profile image — remote embeds refresh without recommitting.",
+      "text": "Tools I Use",
       "x": 48,
-      "y": 104,
-      "fontSize": 15,
+      "y": 150,
+      "fontSize": 20,
       "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif",
-      "fill": "#c5d0e0"
+      "fill": "#e8eef6",
+      "fontWeight": "600"
     },
     {
       "type": "svg",
-      "src": "embeds/sample-chart.svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
       "x": 48,
-      "y": 140,
-      "width": 480,
-      "height": 360
+      "y": 170,
+      "width": 40,
+      "height": 40
     },
     {
       "type": "svg",
-      "src": "embeds/sample-stats.svg",
-      "x": 552,
-      "y": 140,
-      "width": 300,
-      "height": 360
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
+      "x": 100,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-plain.svg",
+      "x": 152,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+      "x": 204,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg",
+      "x": 256,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg",
+      "x": 308,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg",
+      "x": 360,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original-wordmark.svg",
+      "x": 412,
+      "y": 170,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
+      "x": 48,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+      "x": 100,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+      "x": 152,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+      "x": 204,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+      "x": 256,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+      "x": 308,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+      "x": 360,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+      "x": 412,
+      "y": 230,
+      "width": 40,
+      "height": 40
+    },
+    {
+      "type": "svg",
+      "src": "https://github-readme-streak-stats-one-vert.vercel.app?user=RHermanet14&theme=radical",
+      "x": 48,
+      "y": 300,
+      "width": 804,
+      "height": 380
     }
   ]
 }
