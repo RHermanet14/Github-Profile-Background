@@ -46,27 +46,37 @@ To include a live stats card from another service, paste its image URL as an `sv
 
 ### 5. Use it in your profile README
 
-In your `username/username` repo:
+In your **`RHermanet14/RHermanet14`** profile repo (not this repo’s README), add an **image**, not a link.
+
+Wrong (shows a blue “Profile” link only):
+
+```markdown
+[Profile](https://github-tool-chart.vercel.app/api/profile)
+```
+
+Right — markdown image (`!` before the brackets):
+
+```markdown
+![Profile](https://github-tool-chart.vercel.app/api/profile)
+```
+
+Or HTML:
 
 ```html
 <p align="center">
-  <img src="https://YOUR-DEPLOYMENT.vercel.app/api/profile" alt="Profile" />
+  <img src="https://github-tool-chart.vercel.app/api/profile" width="900" alt="Profile" />
 </p>
 ```
 
-Root URL also works (rewrites to the API):
-
-```html
-<img src="https://YOUR-DEPLOYMENT.vercel.app/" alt="Profile" />
-```
+After saving, the GitHub preview should show the banner graphic. Clicking through to the URL in a browser is expected to open the raw SVG (that’s the image source).
 
 Optional query overrides:
 
 ```text
-https://YOUR-DEPLOYMENT.vercel.app/api/profile?bg=aurora&title=Ryan
+https://github-tool-chart.vercel.app/api/profile?bg=aurora&title=Ryan
 ```
 
-After deploy, open `/api/profile` in a browser — you should see the composed SVG. Remote embeds refresh when the cache expires, without a new git commit.
+Edit [`config.json`](config.json) for permanent title/embeds, commit + push (or `npx vercel --prod`) so the live image updates.
 
 ---
 
