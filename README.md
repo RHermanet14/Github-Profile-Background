@@ -1,163 +1,190 @@
-# Profile image compositor (self-hosted)
+# Github Tool Chart
 
-Build **one** live profile SVG from a background + slots (text, local files, or any remote SVG/image embed). Deploy **your own** copy to Vercel so updates happen on request — no recommitting the image — and rate limits stay on your account.
+Self-host a **live GitHub profile banner**: one SVG built from your config (background, text, and any remote stats embeds). Fork it, deploy your own Vercel app, point your profile README at that URL.
+
+Remote embeds (streak cards, language charts, etc.) refresh when their hosts update — **without** recommitting an image file. Layout/text changes live in `config.json` and update when you redeploy.
 
 ```text
-Profile README  --img-->  your-app.vercel.app/api/profile
-                                |
-                         config.json + presets
-                                |
-                         fetch remote / local embeds
-                                |
-                         composed image/svg+xml
+your-username/your-username  README.md
+        │
+        │  <img src="https://YOUR-APP.vercel.app/api/profile" />
+        ▼
+YOUR Vercel deploy  →  reads config.json  →  fetches embeds  →  returns SVG
 ```
+
+Each person runs **their own** deploy so API quotas stay on their account.
 
 ---
 
-## Deploy (recommended)
+## Quick start (fork → profile)
 
-### 1. Fork or clone this repo
+### 1. Fork this repository
 
-### 2. Deploy to Vercel
+Use your GitHub account so you can edit config and deploy from your copy.
 
-- [Deploy with Vercel](https://vercel.com/new) and import the repo, or:
-
-```bash
-npx vercel
-```
-
-### 3. Environment variables (optional)
-
-In the Vercel project → Settings → Environment Variables:
-
-| Variable | Required | Meaning |
-|----------|----------|---------|
-| `CACHE_MAX_AGE` | No | Seconds to cache the composed image (default `3600`) |
-
-### 4. Add your config
+### 2. Create your config
 
 ```bash
 cp config.example.json config.json
 ```
 
-Edit `config.json` (name, background, layout, embed URLs). Commit it on your fork so the deploy picks it up.
+Edit `config.json`:
 
-To include a live stats card from another service, paste its image URL as an `svg` (or `image`) slot `src` — same as you’d put in a normal README `<img>`.
+- Your name / subtitle (`type: "text"` slots)
+- Background (preset, local file, or image URL)
+- Embeds: paste the same `https://…` image URLs you’d use in a normal README (`type: "svg"` or `"image"`)
 
-### 5. Use it in your profile README
+**Commit `config.json` on your fork.** Vercel only gets files that are in the repo (this project tracks `config.json` so deploys include your layout).
 
-Put this in the **`RHermanet14/RHermanet14`** repository’s `README.md` (the special repo that powers your GitHub profile). Do **not** put it only in this `Github-Tool-Chart` repo.
+### 3. Deploy to Vercel
 
-Paste exactly (note `?v=2` — required so GitHub’s image proxy picks up the fixed SVG; without it Camo may keep an old broken copy and only show the alt text “Profile”):
+1. Open [vercel.com/new](https://vercel.com/new) and import **your fork**, or run `npx vercel` / `npx vercel --prod` locally after `npx vercel login`.
+2. Optional env var: `CACHE_MAX_AGE` (seconds; default `3600`).
+3. Copy your production domain, e.g. `https://something.vercel.app`.
+
+Smoke-test in a browser:
+
+```text
+https://YOUR-APP.vercel.app/api/profile
+```
+
+You should see the raw SVG (that’s expected — it’s an image, not a webpage).
+
+### 4. Add it to your GitHub profile README
+
+1. Create a public repo named **exactly** your username: `your-username/your-username`.
+2. Put this in that repo’s `README.md` (not only in this chart repo):
 
 ```html
 <p align="center">
-  <img src="https://github-tool-chart.vercel.app/api/profile?v=2" width="900" alt="Profile banner" />
+  <img src="https://YOUR-APP.vercel.app/api/profile" width="900" alt="Profile banner" />
 </p>
 ```
 
-`alt` is optional. Leaving it out is fine.
+Replace `YOUR-APP` with your Vercel subdomain.
 
-Then commit **that** README on the profile repo and check https://github.com/RHermanet14 — you should see the banner image.
+3. Commit and open `https://github.com/your-username` — the banner should appear.
 
-If you still see only blue “Profile” text, GitHub Camo is still caching a failed SVG. Change `?v=2` to `?v=3` (any new query string forces a fresh fetch).
-
-Opening the image URL in a browser shows the raw SVG on purpose — that is the image file, not a webpage.
+You can remove duplicate streak/tools markup from the profile README if those are already inside the composed banner.
 
 ---
 
-## Local preview (CLI)
+## Local preview (before deploying)
 
 ```bash
-cp config.example.json config.json
-npm run compose
+cp config.example.json config.json   # if you don’t have one yet
+npm run compose                      # → output/profile.svg
 ```
 
 Open `output/profile.svg` in a browser.
 
 ```bash
-npm run compose:example          # uses config.example.json
-npm run compose:aurora           # another preset demo
-node scripts/compose.mjs --help
-```
-
-For a local live server (same as production):
-
-```bash
-npx vercel dev
-# then open http://localhost:3000/api/profile
+npm run compose:example    # uses config.example.json
+npm run compose:aurora     # preset demo
+npx vercel dev             # http://localhost:3000/api/profile
 ```
 
 ---
 
-## Config
+## Config reference
 
 | Field | Meaning |
 |--------|---------|
-| `background` | Preset (`midnight`, `aurora`, `slate`), local path, or `https://` image URL |
-| `width` / `height` | Canvas size |
-| `slots` | Layers on top of the background |
+| `background` | `"midnight"` / `"aurora"` / `"slate"`, a path like `photos/bg.jpg`, or an `https://` image URL |
+| `width` / `height` | Canvas size in px (raise `height` if you stack more content) |
+| `slots` | Layers drawn on top of the background |
+| `out` | Local CLI output path (ignored by the API) |
 
 ### Slot types
 
 ```json
-{ "type": "text", "text": "Hi", "x": 40, "y": 60, "fontSize": 36, "fill": "#fff", "fontWeight": "700" }
+{ "type": "text", "text": "Your Name", "x": 48, "y": 64, "fontSize": 36, "fill": "#f4f7fb", "fontWeight": "700", "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif" }
 
-{ "type": "svg", "src": "embeds/chart.svg", "x": 40, "y": 120, "width": 500, "height": 280 }
+{ "type": "svg", "src": "embeds/sample-chart.svg", "x": 48, "y": 140, "width": 480, "height": 360 }
 
-{ "type": "svg", "src": "https://example.com/your-stats-card.svg?user=You", "x": 40, "y": 120, "width": 500, "height": 280 }
+{ "type": "svg", "src": "https://example.com/stats.svg?user=YourLogin", "x": 48, "y": 300, "width": 800, "height": 380 }
 
-{ "type": "image", "src": "photos/avatar.png", "x": 700, "y": 40, "width": 120, "height": 120 }
+{ "type": "image", "src": "https://example.com/avatar.png", "x": 720, "y": 24, "width": 140, "height": 100 }
 ```
 
-- **svg** — local path or any `https://` URL that returns SVG (stats trackers, charts, badges, etc.)
-- **image** — local or remote png/jpg/gif/webp
-- Remote sources are fetched and inlined on each compose (subject to API cache headers)
+| Type | Use for |
+|------|---------|
+| `text` | Titles and labels |
+| `svg` | Local `.svg` files **or** live remote SVG APIs (stats cards, badges) |
+| `image` | PNG / JPEG / GIF / WebP (local or remote) |
 
-### Backgrounds
+Coordinates: `(0,0)` is the **top-left** of the canvas. Background images use cover-style cropping (`slice`) — they fill the canvas without stretching; overflow is cropped.
 
-| You want | `"background"` value |
-|----------|----------------------|
-| Built-in | `"midnight"`, `"aurora"`, `"slate"` |
-| File in repo | `"presets/midnight.svg"` or `"photos/beach.png"` |
-| Remote photo | `"https://example.com/banner.jpg"` |
+### Example: streak-style embed
 
----
+Whatever URL you already use in a README `<img src="…">` works as a slot `src`:
 
-## Layout sketch (example config)
-
-```text
-←———————————— 900px ————————————→
-┌────────────────────────────────────────┐
-│  background (preset / photo / URL)     │
-│  Title + subtitle                      │
-│  ┌───────────────┐  ┌────────┐         │
-│  │ local / remote│  │ remote │         │
-│  │ svg embed     │  │ embed  │         │
-│  └───────────────┘  └────────┘         │
-└────────────────────────────────────────┘
+```json
+{
+  "type": "svg",
+  "src": "https://github-readme-streak-stats-one-vert.vercel.app?user=YourLogin&theme=radical",
+  "x": 48,
+  "y": 300,
+  "width": 804,
+  "height": 380
+}
 ```
 
----
-
-## Caching
-
-The API sends `Cache-Control: public, s-maxage=…, stale-while-revalidate=86400`.
-
-- Default max age: **1 hour** (`CACHE_MAX_AGE=3600`).
-- Lower it for fresher remote embeds (more upstream calls on your Vercel + those hosts).
-- GitHub/CDN may cache the image as well; hard-refresh or wait for TTL to see changes.
+Put **your** username in that URL (or any other tracker’s query params).
 
 ---
 
-## Why self-host?
+## Updating after you change config
 
-A shared public URL would put everyone’s traffic on one quota. Each user deploying their own instance keeps limits and cost on their account.
+1. Edit `config.json` → commit → push (Vercel redeploys).
+2. Profile README can keep a **stable** URL with no query string if you’re fine waiting for GitHub’s image cache (Camo) to refresh — same idea as other live README badges.
+3. For an **immediate** refresh after a deploy, bump a cache-bust query once:
+
+```html
+<img src="https://YOUR-APP.vercel.app/api/profile?v=2" width="900" alt="Profile banner" />
+```
+
+Change `v=2` → `v=3` (any unused value) only when you need Camo to drop an old/broken copy right away.
 
 ---
 
-## Limits
+## Limits (important for GitHub)
 
-- One flat image: links/hover inside nested SVGs usually do not behave like normal README markdown.
-- Animated GIF backgrounds often will not animate when GitHub displays the SVG.
-- Upstream embed hosts can still rate-limit; caching reduces how often you call them.
+GitHub proxies profile images through **Camo** (~**5 MB** max). This app inlines images into one SVG, so:
+
+| Rule | Guidance |
+|------|----------|
+| Total SVG | Keep under ~**4 MB** |
+| Single background/photo/GIF | Roughly ≤ **~3 MB raw** (base64 expands ~33%) |
+| Direct media URLs | Use a real image URL (`media.tenor.com/…gif`), not a webpage (`tenor.com/view/…`) |
+| GIF animation | Usually **won’t animate** on GitHub inside this SVG; you’ll see a still frame |
+| Links inside the banner | Not clickable like normal README markdown — it’s one flat image |
+
+If Camo shows **Content length exceeded** or **Error Fetching Resource**, the composed SVG is too large or the API returned an error — shrink the background or check `/api/profile` in a browser.
+
+---
+
+## Troubleshooting
+
+| Symptom | Likely fix |
+|---------|------------|
+| Blue “Profile” text only | Use `<img src="…">`, not `[Profile](url)`. Or Camo failed — open the image URL directly. |
+| Browser shows raw SVG | Normal for `/api/profile`. |
+| Profile stuck on old banner | Wait for Camo, or bump `?v=`. |
+| Deploy ignores your edits | Confirm `config.json` is committed on the branch Vercel builds. |
+| HTML / wrong background | Background URL returned a webpage — use a direct image link. |
+| Image too large error | Use a smaller PNG/JPEG/GIF under the size limits above. |
+
+---
+
+## Project layout
+
+| Path | Role |
+|------|------|
+| `config.example.json` | Starter layout — copy to `config.json` |
+| `config.json` | Your layout (commit on your fork) |
+| `api/profile.js` | Vercel endpoint that composes the SVG |
+| `lib/compose.mjs` | Compositor (also used by the CLI) |
+| `presets/` | Built-in backgrounds |
+| `embeds/` | Sample local SVGs |
+| `scripts/compose.mjs` | Local `npm run compose` |
