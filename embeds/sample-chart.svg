@@ -22,5 +22,5 @@
     <rect x="140" y="194" width="60" height="16" rx="4" fill="#f97316"/>
     <text x="454" y="208">12%</text>
   </g>
-  <text x="28" y="250" fill="#8fa0b5" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12">Swap this file  compose rebuilds the profile image.</text>
+  <text x="28" y="250" fill="#8fa0b5" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12">Swap this file - compose rebuilds the profile image.</text>
 </svg>
