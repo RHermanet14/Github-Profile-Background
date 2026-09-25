@@ -1,4 +1,4 @@
-# Github Tool Chart
+# Github Profile Background
 
 Self-host a **live GitHub profile banner**: one SVG built from your config (background, text, and any remote stats embeds). Fork it, deploy your own Vercel app, point your profile README at that URL.
 
